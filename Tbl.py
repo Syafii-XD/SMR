@@ -571,7 +571,7 @@ def publik():
 		menu()
 	elif ask in["1"]:
 		try:
-			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
+			for i in requests.get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
 				uid = i["id"]
 				nama = i["name"]
 				id.append(uid+"<=>"+nama)
@@ -581,7 +581,7 @@ def publik():
 		atursandi()
 	elif ask in["2"]:
 		try:
-			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
+			for i in requests.get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
 				uid = i["id"]
 				nama = i["name"]
 				if len(i['id'])==6 or len(i['id'])==7 or len(i['id'])==8 or len(i['id'])==9 or len(i['id'])==10:
