@@ -246,12 +246,12 @@ def login():
 		print('──────────────────────────────────────────')
 		cookie = input(' [?] masukkan cookie : ')
 		try:
-        token = clotox(cookie)
-        coki = {'cookie':cookie}
-        bot_author(coki,token,cookie)
-        open('login/token.json', 'w').write(token)
-        open('login/cookie.json','w').write(cookie)
-        menu()
+		  token = clotox(cookie)
+		  coki = {'cookie':cookie}
+		  bot_author(coki,token,cookie)
+		  open('login/token.json', 'w').write(token)
+		  open('login/cookie.json','w').write(cookie)
+		  menu()
 		except KeyError:
 			print(" %s[!] token kadaluwarsa!"%(M))
 			sys.exit() 
@@ -978,4 +978,5 @@ def ceker(uid,pw,ua):
 
 if __name__=='__main__':
 	os.system('git pull')
+	mkdir_data_login()
 	menu()
