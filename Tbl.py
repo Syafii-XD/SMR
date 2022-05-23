@@ -571,7 +571,7 @@ def publik():
 		menu()
 	elif ask in["1"]:
 		try:
-		  url= requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
+		  url = requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
 		  z=json.loads(url.text)
 		  for i in z['friends']['data']:
 		    uid = i["id"]
@@ -584,7 +584,7 @@ def publik():
 		    atursandi()
 	elif ask in["2"]:
 	  try:
-	    url= requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
+	    url = requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
 	    z=json.loads(url.text)
 	    for i in z['friends']['data']:
 	      uid = i["id"]
@@ -600,8 +600,6 @@ def atursandi():
 	print('──────────────────────────────────────────')
 	print(" [1] otomatis  [2] manual  [3] gabungkan")
 	ask=input(" [?] pilih : ")
-	if ask in[""]:
-		menu()
 	elif ask in["1"]:
 		otomatis()
 	elif ask in["2"]:
