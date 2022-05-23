@@ -571,13 +571,16 @@ def publik():
 		menu()
 	elif ask in["1"]:
 		try:
-			for i in requests.get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
-				uid = i["id"]
-				nama = i["name"]
-				id.append(uid+"<=>"+nama)
-		except KeyError:
-			exit(" [!] akun tidak tersedia atau list teman private")
-		print(" [+] total id : %s"%(len(id)))
+        url= requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
+        z=json.loads(url.text)
+        for i in z['friends']['data']:
+            uid = i["id"]
+            nama = i["name"]
+            id.append(uid+"<=>"+nama)
+    except KeyError:
+        print("[•] User id tidak di temukan atau akun tersebut privat ");menu()
+    if len(id) !=0:
+        print(" [+] total id : %s"%(len(id)))
 		atursandi()
 	elif ask in["2"]:
 		try:
