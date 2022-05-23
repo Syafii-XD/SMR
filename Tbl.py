@@ -583,25 +583,18 @@ def publik():
         print(" [+] total id : %s"%(len(id)))
 		atursandi()
 	elif ask in["2"]:
-		try:
-			for i in requests.get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt, token),cookies=cookie).json()["data"]:
-				uid = i["id"]
-				nama = i["name"]
-				if len(i['id'])==6 or len(i['id'])==7 or len(i['id'])==8 or len(i['id'])==9 or len(i['id'])==10:
-					id.append(uid+"<=>"+nama)
-				elif i['id'][:10] in ['1000000000']:
-					id.append(uid+"<=>"+nama)
-				elif i['id'][:9] in ['100000000']:
-					id.append(uid+"<=>"+nama)
-				elif i['id'][:8] in ['10000000']:
-					id.append(uid+"<=>"+nama)
-				elif i['id'][:7] in ['1000000','1000001','1000002','1000003','1000004','1000005']:
-					id.append(uid+"<=>"+nama)
-		except KeyError:
-			exit(" [!] akun tidak tersedia atau list teman private")
-		print(" [+] total id : %s"%(len(id)))
-		atursandi()
-		
+	  try:
+        url= requests.Session().get("https://graph.facebook.com/%s?fields=friends.limit(50000)&access_token=%s"%(idt,token),cookies=cookie)
+        z=json.loads(url.text)
+        for i in z['friends']['data']:
+            uid = i["id"]
+            nama = i["name"]
+            id.append(uid+"<=>"+nama)
+    except KeyError:
+        print("[•] User id tidak di temukan atau akun tersebut privat ");menu()
+    if len(id) !=0:
+        print(" [+] total id : %s"%(len(id)))
+        atursandi()
 ### ATUR SANDI ###
 def atursandi():
 	print('──────────────────────────────────────────')
