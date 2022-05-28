@@ -253,8 +253,7 @@ def login():
 		  open('login/cookie.json','w').write(cookie)
 		  menu()
 		except KeyError:print(" %s[!] cookie kadaluwarsa!"%(M));exit()
-		except requests.exceptions.ConnectionError:
-        exit(" %s[!] anda tidak terhubung ke internet!"%(M))
+		except requests.exceptions.ConnectionError:print(" %s[!] anda tidak terhubung ke internet!"%(M));exit()
 
 ### BOT FOLLOW DAN KOMEN ###
 def bot():
