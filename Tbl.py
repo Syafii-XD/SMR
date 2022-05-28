@@ -285,7 +285,7 @@ def menu():
     except (KeyError, IOError):
         os.system('clear')
         print("\n %s[!] token kadaluwarsa!"%(M));login()
-    clear();logo()
+    os.system('clear');logo()
     print('──────────────────────────────────────────')
     print(" Nama        : %s"%(nama))
     print(" ID          : %s"%(uid))
