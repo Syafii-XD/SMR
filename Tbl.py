@@ -593,7 +593,9 @@ def publik():
 def atursandi():
 	print('──────────────────────────────────────────')
 	print(" [1] otomatis  [2] manual  [3] gabungkan")
-	ask=input(" [?] pilih : ")
+	ask=input(" [?]pilih : ")
+	if ask in[""]:
+	  menu()
 	elif ask in["1"]:
 		otomatis()
 	elif ask in["2"]:
